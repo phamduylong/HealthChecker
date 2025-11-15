@@ -12,9 +12,9 @@ public class Worker(ILogger<Worker> logger) : BackgroundService
             }
 
             var res = HealthChecker.Check();
-            foreach (var check in res.Where(check => check.IsOnline))
+            foreach (var check in res.Where(check => !check.IsOnline))
             {
-                logger.LogInformation($"{check.SiteUrl} is online and healthy");
+                logger.LogError($"{check.SiteUrl} is on-line and healthy");
             }
 
             await Task.Delay(1000, stoppingToken);
